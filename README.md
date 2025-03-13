@@ -10,4 +10,4 @@
 
 - A meme that captures how I currently feel about my university studies is ![](https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExNGg1ZnhvcWJjbG03MGpzYXFpM2pzZGEyZzJ3c3FxMHgydm02Nm11ayZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/rdma0nDFZMR32/giphy.gif)
 
-- And I found [GIPHY](https://giphy.com/) has some fun gifs:)
+- And I found [GIPHY](https://giphy.com/) has some fun gifs!
