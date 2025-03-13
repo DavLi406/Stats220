@@ -2,7 +2,7 @@
 
 ## This is my repo for STATS 220. 
 
-**A little about me**:
+- **A little about me**:
 
 1. I am undertaking a degree in *Data Science*
 2. I am taking STATS 220 because *it is a required course*.
