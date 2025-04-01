@@ -5,16 +5,84 @@ output: html_fragment
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE, error=FALSE)
-
 ```
 
 ```{css}
-
 ```
 
 ## What's going on with this data?
 
-You need to change the contents of this Rmd! Replace the R code and markdown give below in this template document.
+This report explores how people's budgeting habits may relate to how satisfied they are with their spending. It also looks at common spending categories and income levels.
+
+## Summary statistics
+
+```{r summary, echo=FALSE}
+library(tidyverse)
+csv_url <- "https://docs.google.com/spreadsheets/d/e/2PACX-1vRp68OJG1BppqOKpFNqu4lZ6M_Mei5fYUkEFATFg9_d9waPKM_cOAVodqgoxHJonBNl3a6-xxLA36uF/pub?gid=352280045&single=true&output=csv"
+logged_data <- read_csv(csv_url)
+latest_data <- logged_data %>%
+  rename(avg_monthly_expenditure = `What is your average monthly expenditure in NZD (4 weeks)?`,
+    largest_spending_category = `Which category accounts for the largest portion of your monthly spending?`,
+    monthly_budget = `Do you maintain a monthly budget for your expenses? (Yes -> 1, No -> 2, Sometimes -> 3)`,
+    avg_monthly_income = `What is your average monthly income in NZD? (4 weeks)`,
+    spending_habits_satisfaction = `How satisfied are you with your current spending habits?`
+  ) %>%
+  select(-Timestamp)
+# Group 1: No budget
+no_plan_group <- latest_data %>%
+  select(monthly_budget, spending_habits_satisfaction) %>%
+  filter(monthly_budget == 2) %>%
+  pull(spending_habits_satisfaction)
+num_no_plan <- length(no_plan_group)
+print(num_no_plan)
+mean_score_no <- mean(no_plan_group, na.rm = TRUE)
+print(mean_score_no)
+
+# Group 2: Sometimes budget
+sometimes_plan_group <- latest_data %>%
+  select(monthly_budget, spending_habits_satisfaction) %>%
+  filter(monthly_budget == 3) %>%
+  pull(spending_habits_satisfaction)
+num_sometimes_plan <- length(sometimes_plan_group)
+print(num_sometimes_plan)
+mean_score_sometimes <- mean(sometimes_plan_group, na.rm = TRUE)
+print(mean_score_sometimes)
+
+# Group 3: Always budget
+planed_group <- latest_data %>%
+  select(monthly_budget, spending_habits_satisfaction) %>%
+  filter(monthly_budget == 1) %>%
+  pull(spending_habits_satisfaction)
+num_plan <- length(planed_group)
+print(num_plan)
+mean_score_plan <- mean(planed_group, na.rm = TRUE)
+print(mean_score_plan)
+```
+
+### Dynamic comment
+
+-   People who always have a budget trend to be more satisfy to their spending.
+
+## Bar Chart 1: Spending category by income
+
+```{r bar1, echo=FALSE}
+ggplot(data = latest_data) +
+  geom_bar(aes(x = factor(largest_spending_category), fill = factor(avg_monthly_income)))
+```
+
+------------------------------------------------------------------------
+
+## Bar Chart 2: Satisfaction score by budgeting habit
+
+```{r bar2, echo=FALSE}
+ggplot(data = latest_data) + 
+  geom_bar(aes(x = factor(spending_habits_satisfaction), fill = factor(monthly_budget))) + 
+  labs(
+    title = "Spending Habits Satisfaction",
+    x = "Score",
+    y = "Number ppl"
+  )
+```
 
 ```{r}
 pets <- c("cat", "dog", "turtle", "rabbit")
